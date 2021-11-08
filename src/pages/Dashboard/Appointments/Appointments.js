@@ -17,7 +17,7 @@ const Appointments = ({date}) => {
        console.log(appointments);
 
         useEffect(() => {
-            fetch(`https://morning-waters-50302.herokuapp.com/appointments?email=${user?.email}&date=${date}`,{
+            fetch(`https://morning-waters-50302.herokuapp.com/appointments?email=${user?.email}&date=${date.toLocaleDateString()}`,{
               headers: {
                 'authorization': `Bearer ${token}`
               }

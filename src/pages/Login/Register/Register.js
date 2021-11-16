@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import login from "../../../images/login.png";
 
@@ -17,7 +17,7 @@ const Register = () => {
   const [loginData, setLoginData] = useState({});
   const { user, registerUser, isLoading, authError } = useAuth();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handelOnBlur = (e) => {
     const inputField = e.target.name;
@@ -33,7 +33,7 @@ const Register = () => {
       alert("Password did not match");
       return;
     }
-    registerUser(loginData.email, loginData.password, loginData.name, history);
+    registerUser(loginData.email, loginData.password, loginData.name, navigate);
     e.preventDefault();
   };
   return (

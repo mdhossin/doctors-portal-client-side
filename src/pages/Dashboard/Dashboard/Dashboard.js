@@ -16,13 +16,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
-import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
-import DashboardHome from "../DashboardHome/DashboardHome";
-import MakeAdmin from "../MakeAdmin/MakeAdmin";
-import AddDoctors from "../AddDoctors/AddDoctors";
-import useAuth from "../../../hooks/useAuth";
-import AdminRoute from "../../Login/AdminRoute/AdminRoute";
+import {  Outlet , Link } from "react-router-dom";
 
+import useAuth from "../../../hooks/useAuth";
+;
 
 const drawerWidth = 200;
 
@@ -31,12 +28,12 @@ function Dashboard(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   // get the admin
-  const {admin} = useAuth()
+  const { admin } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  let { path, url } = useRouteMatch();
+
   const drawer = (
     <div>
       <Toolbar />
@@ -48,24 +45,26 @@ function Dashboard(props) {
         <Button color="inherit">Appointment</Button>
       </Link>
 
-      <Link style={{ color: "black", textDecoration: "none" }} to={`${url}`}>
+      <Link style={{ color: "black", textDecoration: "none" }} to="/dashboard">
         <Button color="inherit">Dashboard</Button>
       </Link>
 
-      {admin && <Box>
-      <Link
-        style={{ color: "black", textDecoration: "none" }}
-        to={`${url}/makeAdmin`}
-      >
-        <Button color="inherit">Make Admin</Button>
-      </Link>
-      <Link
-        style={{ color: "black", textDecoration: "none" }}
-        to={`${url}/addDoctors`}
-      >
-        <Button color="inherit">Add Doctors</Button>
-      </Link>
-      </Box>}
+      {admin && (
+        <Box>
+          <Link
+            style={{ color: "black", textDecoration: "none" }}
+            to={`/dashboard/makeAdmin`}
+          >
+            <Button color="inherit">Make Admin</Button>
+          </Link>
+          <Link
+            style={{ color: "black", textDecoration: "none" }}
+            to={`/dashboard/addDoctors`}
+          >
+            <Button color="inherit">Add Doctors</Button>
+          </Link>
+        </Box>
+      )}
 
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
@@ -156,18 +155,7 @@ function Dashboard(props) {
       >
         <Toolbar />
 
-        <Switch>
-          <Route exact path={path}>
-            <h3>Please select a topic.</h3>
-            <DashboardHome></DashboardHome>
-          </Route>
-          <AdminRoute path={`${path}/makeAdmin`}>
-            <MakeAdmin></MakeAdmin>
-          </AdminRoute>
-          <AdminRoute path={`${path}/addDoctors`}>
-            <AddDoctors></AddDoctors>
-          </AdminRoute>
-        </Switch>
+      <Outlet></Outlet>
       </Box>
     </Box>
   );

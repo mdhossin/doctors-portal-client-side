@@ -9,9 +9,10 @@ import {
 } from "@mui/material";
 
 import React, { useState } from "react";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import login from "../../../images/login.png";
 import useAuth from "../../../hooks/useAuth";
+import { useLocation, useNavigate } from "react-router";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({});
@@ -26,7 +27,7 @@ const Login = () => {
   } = useAuth();
 
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // get the input value onchange on form submit
   const handelOnChange = (e) => {
@@ -42,14 +43,14 @@ const Login = () => {
       loginData.email,
       loginData.password,
       location,
-      history
+      navigate
     );
     e.preventDefault();
   };
 
   // sign in with google
   const handelGoogleSignIn = () => {
-    signInWithGoolge(location, history)
+    signInWithGoolge(location, navigate)
   }
 
   return (

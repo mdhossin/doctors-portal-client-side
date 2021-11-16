@@ -23,7 +23,7 @@ const style = {
 };
 
 const BookingModal = ({ modalOpen, handleModalClose, booking, date,setBookingSeccess }) => {
-  const { name, time } = booking;
+  const { name, time,price } = booking;
   const { user } = useAuth();
   // console.log(user);
 
@@ -51,6 +51,7 @@ const BookingModal = ({ modalOpen, handleModalClose, booking, date,setBookingSec
     const appointment = {
       ...bookingInfo,
       time,
+      price,
       serviceName: name,
       date: date.toLocaleDateString()
     };

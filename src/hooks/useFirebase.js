@@ -39,7 +39,7 @@ const useFirebase = () => {
 
   // SIGN in with google with popup
 
-  const signInWithGoolge = (location, history) => {
+  const signInWithGoolge = (location, navigate) => {
     setIsLoading(true);
     signInWithPopup(auth, googleProvider)
       .then((result) => {
@@ -51,7 +51,7 @@ const useFirebase = () => {
         const redirects = location?.state?.from || "/";
         // history.push(redirects);
         // or
-        history.replace(redirects);
+        navigate(redirects);
         setAuthError("");
       })
       .catch((error) => {
@@ -61,7 +61,7 @@ const useFirebase = () => {
   };
 
   //   create a new user with email and password or register user
-  const registerUser = (email, password, name, history) => {
+  const registerUser = (email, password, name, navigate) => {
     setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
@@ -85,7 +85,7 @@ const useFirebase = () => {
             // ...
           });
 
-        history.replace("/");
+        navigate("/");
       })
       .catch((error) => {
         setAuthError(error.message);
@@ -95,14 +95,14 @@ const useFirebase = () => {
 
   //   login with email and password
 
-  const loginWithEmailAndPassword = (email, password, location, history) => {
+  const loginWithEmailAndPassword = (email, password, location, navigate) => {
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         const redirects = location?.state?.from || "/";
         // history.push(redirects);
         // or
-        history.replace(redirects);
+        navigate(redirects);
         setAuthError("");
       })
       .catch((error) => {
@@ -118,7 +118,7 @@ const useFirebase = () => {
       if (user) {
         setUser(user);
         getIdToken(user).then(idToken => {
-          console.log(idToken);
+          // console.log(idToken);
           setToken(idToken)
         })
       } else {
